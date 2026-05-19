@@ -9,10 +9,36 @@
 <body>
 
     <div class="container">
-        <h1>Meu Bloco de Notas</h1>
+        <div class="topo">
+            <div class="cabecalho">
+                <span class="etiqueta">Notas rapidas</span>
+                <h1>Meu Bloco de Notas</h1>
+            </div>
+            <label class="seletor-tema" for="tema">
+                <span>Modo escuro</span>
+                <input type="checkbox" id="tema" aria-label="Ativar modo escuro">
+                <span class="interruptor" aria-hidden="true"></span>
+            </label>
+        </div>
         <p>Suas anotações são salvas automaticamente no seu navegador.</p>
+
+        <div class="painel-informacoes">
+            <div class="cartao-info">
+                <span class="legenda-info">Status</span>
+                <strong id="statusSalvamento">Salvamento automatico ativo</strong>
+            </div>
+            <div class="cartao-info">
+                <span class="legenda-info">Caracteres</span>
+                <strong id="contadorCaracteres">0</strong>
+            </div>
+        </div>
         
         <textarea id="blocoDeNotas" placeholder="Comece a digitar aqui..."></textarea>
+
+        <div class="rodape">
+            <span>Seu conteudo fica salvo localmente neste navegador.</span>
+            <span>Interface otimizada para claro e escuro.</span>
+        </div>
     </div>
 
     <script src="script.js"></script>

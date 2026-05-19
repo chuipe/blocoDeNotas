@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Primeiro, precisamos de uma referência ao nosso elemento <textarea>.
     // Usamos 'document.getElementById' para pegar o elemento pelo 'id' que definimos no HTML.
     const blocoDeNotas = document.getElementById('blocoDeNotas');
+    const seletorTema = document.getElementById('tema');
+    const contadorCaracteres = document.getElementById('contadorCaracteres');
+    const statusSalvamento = document.getElementById('statusSalvamento');
 
     // 2. CARREGANDO DADOS DO LOCALSTORAGE
     // ------------------------------------
@@ -16,6 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Usamos 'localStorage.getItem()' para buscar um item salvo.
     // Aqui, estamos procurando por um item que salvamos com a chave 'minhaNota'.
     const notaSalva = localStorage.getItem('minhaNota');
+    const temaSalvo = localStorage.getItem('temaPreferido') || 'light';
+
+    const atualizarContador = () => {
+        contadorCaracteres.textContent = blocoDeNotas.value.length;
+    };
+
+    const aplicarTema = (temaEscuroAtivo) => {
+        document.body.classList.toggle('dark-mode', temaEscuroAtivo);
+        seletorTema.checked = temaEscuroAtivo;
+        localStorage.setItem('temaPreferido', temaEscuroAtivo ? 'dark' : 'light');
+    };
 
     // Verificamos se encontramos alguma nota salva.
     if (notaSalva) {
@@ -23,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // nós colocamos o valor salvo de volta no nosso 'blocoDeNotas'.
         blocoDeNotas.value = notaSalva;
     }
+
+    atualizarContador();
+    aplicarTema(temaSalvo === 'dark');
 
     // 3. ADICIONANDO UM 'EVENTLISTENER'
     // ---------------------------------
@@ -46,8 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
         //   - O segundo é o VALOR que queremos salvar. 'blocoDeNotas.value' contém o texto
         //     que está atualmente na área de texto.
         localStorage.setItem('minhaNota', blocoDeNotas.value);
+        atualizarContador();
+        statusSalvamento.textContent = 'Ultima alteracao salva agora';
 
         console.log("Nota salva no localStorage!"); // Uma mensagem no console para fins de depuração.
+    });
+
+    seletorTema.addEventListener('change', () => {
+        aplicarTema(seletorTema.checked);
     });
 
 });
